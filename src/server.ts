@@ -1,12 +1,13 @@
-import CarritoRouterFactory from '../src/ModuloCarrito/Infrastructura/Factory/CarritoRouterFactory';
-import AuthRouterFactory from './Modulo Autenticacion/Infrastructura/Factory/AuthRouterFactory';
+import CarritoRouterFactory from './ModuloCarrito/Infrastructura/Factory/CarritoRouterFactory';
+
 import ServerFactory from './Express/infrastructure/factory/ServerFactory';
 import FavoritoRouterFactory from './ModuloFavorito/Infrastructura/Factory/FavoritoRouterFactory';
-// Ensure this path is correct
 import UsuarioRouterFactory from './ModuloUsuario/Infrastructura/Factory/UsuarioRouterFactory';
-import PagoRouterFactory from './Modulo Pago/Infrastructura/Factory/PagoRouterFactory';
-import ProductoRouterFactory from './ModuloProductos/Infrastructura/Factory/CarritoRouterFactory';
+ // Corregido el nombre
 import ImagenFactory from './images/infarstructura/factory/ImagenRouterFactory';
+import AuthRouterFactory from './Modulo Autenticacion/Infrastructura/Factory/AuthRouterFactory';
+import ProductoRouterFactory from './ModuloProductos/Infrastructura/Factory/CarritoRouterFactory';
+import PagoRouterFactory from './Modulo Pago/Infrastructura/Factory/PagoRouterFactory';
 
 // Create instances of the routers using their respective factories
 const carritoRouter = CarritoRouterFactory.create();

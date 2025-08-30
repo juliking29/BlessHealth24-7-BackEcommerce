@@ -1,7 +1,5 @@
 import express, { Application } from 'express';
-import https from 'https';
 import http from 'http';
-import fs from 'fs';
 import cors from 'cors';
 import ExpressProvider from '../provider/ExpressProvider';
 import RouterExpressInterface from '../../domain/RouterExpressInterface';
@@ -17,6 +15,7 @@ export default class Server {
     this.app = express();
     this.configure();
     this.routes();
+    this.addHealthCheck();
   }
 
   /**
@@ -28,9 +27,9 @@ export default class Server {
       origin: [
         'http://127.0.0.1:5501',
         'http://localhost:5501',
-         'http://127.0.0.1:5501',
-        'http://localhost:5501'
-                        
+        'http://127.0.0.1:3000',
+        'http://localhost:3000',
+        
       ],
       methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
       allowedHeaders: ['Content-Type', 'Authorization'],
@@ -54,27 +53,19 @@ export default class Server {
 
     this.app.use(this.error.path, this.error.router);
   }
+    private addHealthCheck() {
+    this.app.get('/health', (_req, res) => {
+      res.status(200).json({ status: 'OK', message: 'Server is running' });
+    });
+  }
 
   public start() {
     const HOST = ExpressProvider.getHost();
     const PORT = ExpressProvider.getPort();
-    const HTTP_PORT = 3001; 
-    const PROTOCOL = ExpressProvider.getProtocol();
 
-    // HTTPS options
-    const httpsOptions = {
-      key: fs.readFileSync('C:/Users/cpsab/Desktop/Nueva carpeta (5)/parcailProyecto-back/certificates/buenavida-key.pem'),
-      cert: fs.readFileSync('C:/Users/cpsab/Desktop/Nueva carpeta (5)/parcailProyecto-back/certificates/buenavida-cert.pem'),
-    };
-
-    // Start HTTPS server
-    https.createServer(httpsOptions, this.app).listen(PORT, () => {
-      console.log(`✅ HTTPS Server running at ${PROTOCOL}://${HOST}:${PORT}`);
-    });
-
-    // Start HTTP server
-    http.createServer(this.app).listen(HTTP_PORT, () => {
-      console.log(`✅ HTTP Server running at http://${HOST}:${HTTP_PORT}`);
+    // Start HTTP server only
+    http.createServer(this.app).listen(PORT, () => {
+      console.log(`✅ HTTP Server running at http://${HOST}:${PORT}`);
     });
   }
 }

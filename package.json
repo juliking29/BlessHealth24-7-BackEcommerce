@@ -1,11 +1,13 @@
 {
   "name": "parcailproyecto-back",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "build/server.js",
   "scripts": {
-    "dev": "ts-node-dev   src/server.ts",
-    "start": "node build/app.js",
+    "dev": "ts-node-dev src/server.ts",
     "build": "tsc",
+    "start": "node build/server.js",
+    "clean": "rm -rf build",
+    "prestart": "npm run build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -20,7 +22,6 @@
     "express": "^4.21.2",
     "jsonwebtoken": "^9.0.2",
     "mysql2": "^3.12.0",
-    "parcailproyecto-back": "file:",
     "uuid": "^11.1.0"
   },
   "devDependencies": {
